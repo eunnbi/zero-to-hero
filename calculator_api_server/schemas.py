@@ -1,3 +1,5 @@
+from typing import TypeVar, Generic
+
 from pydantic import BaseModel
 
 
@@ -5,5 +7,10 @@ class CalculationResult(BaseModel):
     result: float
 
 
-class CommonResponseModel(BaseModel):
-    data: CalculationResult
+DataT = TypeVar('DataT')
+
+
+class SuccessResponseModel(BaseModel, Generic[DataT]):
+    data: DataT
+
+
