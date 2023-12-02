@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
@@ -31,6 +31,6 @@ async def get_multiplication_result(number1: float, number2: float):
 @app.get(path='/divide', response_model=SuccessResponseModel[CalculationResult])
 async def get_division_result(number1: float, number2: float):
     if number2 == 0:
-        return JSONResponse(content={"detail": "The number cannot divide by zero"}, status_code=400)
+        raise HTTPException(status_code=400, detail="The number cannot divide by zero")
     else:
         return SuccessResponseModel(data=CalculationResult(result=number1 / number2))
