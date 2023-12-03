@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import FastAPI, Response, Request, HTTPException
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -7,7 +9,6 @@ from database import create_db_and_tables, engine
 
 import crud
 import models
-import schemas
 
 app = FastAPI()
 
@@ -23,28 +24,28 @@ async def validation_exception_handler(_: Request, exc: RequestValidationError):
     return JSONResponse(content={"detail": message}, status_code=400)
 
 
-@app.get(path='/todos', response_model=schemas.SuccessResponse[list[models.Todo]])
+@app.get(path='/todos', response_model=models.SuccessResponse[List[models.TodoRead]])
 async def read_todos():
     with Session(engine) as session:
         todos = crud.get_todos(session)
-        return schemas.SuccessResponse(data=todos)
+        return models.SuccessResponse(data=todos)
 
 
-@app.post(path='/todos', response_model=schemas.SuccessResponse[models.Todo])
+@app.post(path='/todos', response_model=models.SuccessResponse[models.TodoRead])
 async def create_todo(todo: models.TodoCreate):
     with Session(engine) as session:
         new_todo = crud.create_todo(db=session, todo=todo)
-        return schemas.SuccessResponse(data=new_todo)
+        return models.SuccessResponse(data=new_todo)
 
 
-@app.patch(path='/todos/{todo_id}', response_model=schemas.SuccessResponse[models.Todo])
+@app.patch(path='/todos/{todo_id}', response_model=models.SuccessResponse[models.TodoRead])
 async def update_todo(todo_id: int, todo: models.TodoUpdate):
     with Session(engine) as session:
         new_todo = crud.update_todo(db=session, todo_id=todo_id, todo=todo)
         if new_todo is None:
             raise HTTPException(status_code=404, detail="Item not found")
         else:
-            return schemas.SuccessResponse(data=new_todo)
+            return models.SuccessResponse(data=new_todo)
 
 
 @app.delete(path='/todos/{todo_id}')
