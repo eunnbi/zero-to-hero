@@ -11,7 +11,7 @@ class TodoBase(SQLModel):
 
 class Todo(TodoBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    done: bool | None = Field(default=False)
+    done: bool | None = False
 
 
 class TodoCreate(TodoBase):
