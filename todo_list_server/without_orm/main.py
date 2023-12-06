@@ -26,20 +26,20 @@ async def validation_exception_handler(_: Request, exc: RequestValidationError):
     return JSONResponse(content={"detail": message}, status_code=400)
 
 
-@app.get(path='/todos', response_model=schemas.SuccessResponse[list[schemas.Todo]])
-async def read_todos():
+@app.get(path='/todos')
+async def read_todos() -> schemas.SuccessResponse[list[schemas.Todo]]:
     todos = await crud.get_todos()
     return schemas.SuccessResponse(data=todos)
 
 
-@app.post(path='/todos', response_model=schemas.SuccessResponse[schemas.Todo])
-async def create_todo(todo: schemas.TodoCreate):
+@app.post(path='/todos')
+async def create_todo(todo: schemas.TodoCreate) -> schemas.SuccessResponse[schemas.Todo]:
     new_todo = await crud.create_todo(todo=todo)
     return schemas.SuccessResponse(data=new_todo)
 
 
-@app.patch(path='/todos/{todo_id}', response_model=schemas.SuccessResponse[schemas.Todo])
-async def update_todo(todo_id: int, todo: schemas.TodoUpdate):
+@app.patch(path='/todos/{todo_id}')
+async def update_todo(todo_id: int, todo: schemas.TodoUpdate) -> schemas.SuccessResponse[schemas.Todo]:
     new_todo = await crud.update_todo(todo_id=todo_id, todo=todo)
     if new_todo is None:
         raise HTTPException(status_code=404, detail="Item not found")

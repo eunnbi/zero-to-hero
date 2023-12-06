@@ -1,5 +1,3 @@
-from typing import List
-
 from fastapi import FastAPI, Response, Request, HTTPException
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -24,22 +22,22 @@ async def validation_exception_handler(_: Request, exc: RequestValidationError):
     return JSONResponse(content={"detail": message}, status_code=400)
 
 
-@app.get(path='/todos', response_model=models.SuccessResponse[List[models.TodoRead]])
-async def read_todos():
+@app.get(path='/todos')
+async def read_todos() -> models.SuccessResponse[list[models.TodoRead]]:
     with Session(engine) as session:
         todos = crud.get_todos(session)
         return models.SuccessResponse(data=todos)
 
 
-@app.post(path='/todos', response_model=models.SuccessResponse[models.TodoRead])
-async def create_todo(todo: models.TodoCreate):
+@app.post(path='/todos')
+async def create_todo(todo: models.TodoCreate) -> models.SuccessResponse[models.TodoRead]:
     with Session(engine) as session:
         new_todo = crud.create_todo(db=session, todo=todo)
         return models.SuccessResponse(data=new_todo)
 
 
-@app.patch(path='/todos/{todo_id}', response_model=models.SuccessResponse[models.TodoRead])
-async def update_todo(todo_id: int, todo: models.TodoUpdate):
+@app.patch(path='/todos/{todo_id}')
+async def update_todo(todo_id: int, todo: models.TodoUpdate) -> models.SuccessResponse[models.TodoRead]:
     with Session(engine) as session:
         new_todo = crud.update_todo(db=session, todo_id=todo_id, todo=todo)
         if new_todo is None:
