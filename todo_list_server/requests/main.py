@@ -1,13 +1,14 @@
 import requests
 import json
+from pydantic.dataclasses import dataclass
 
 BASE_URL = "http://localhost:8000"
 
 
+@dataclass
 class Todo:
-    def __init__(self, title: str, content: str):
-        self.title = title
-        self.content = content
+    title: str
+    content: str
 
 
 def add_todos():
