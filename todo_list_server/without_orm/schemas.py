@@ -1,4 +1,4 @@
-from typing import Generic, TypeVar, Optional
+from typing import Generic, TypeVar
 from pydantic import BaseModel
 
 DataT = TypeVar('DataT')
@@ -23,6 +23,6 @@ class Todo(TodoBase):
 
 
 class TodoUpdate(BaseModel):
-    title: Optional[str] = None
-    content: Optional[str] = None
-    done: Optional[bool] = None
+    title: str | None = None
+    content: str | None = None
+    done: bool | None = None

@@ -1,4 +1,4 @@
-from typing import Optional, Generic, TypeVar
+from typing import Generic, TypeVar
 from pydantic.generics import GenericModel
 
 from sqlmodel import Field, SQLModel
@@ -10,8 +10,8 @@ class TodoBase(SQLModel):
 
 
 class Todo(TodoBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    done: Optional[bool] = Field(default=False)
+    id: int | None = Field(default=None, primary_key=True)
+    done: bool | None = Field(default=False)
 
 
 class TodoCreate(TodoBase):
@@ -24,9 +24,9 @@ class TodoRead(TodoBase):
 
 
 class TodoUpdate(SQLModel):
-    title: Optional[str] = None
-    content: Optional[str] = None
-    done: Optional[bool] = None
+    title: bool | None = None
+    content: bool | None = None
+    done: bool | None = None
 
 
 SQLSchema = TypeVar("SQLSchema")
