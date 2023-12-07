@@ -22,7 +22,7 @@ def create_todo(db: Session, todo: models.TodoCreate):
 def update_todo(db: Session, todo_id: int, todo: models.TodoUpdate):
     db_todo = get_todo(db, todo_id)
     if db_todo is not None:
-        todo_data = todo.dict(exclude_unset=True, exclude_none=True)
+        todo_data = todo.dict(exclude_none=True)
         for key, value in todo_data.items():
             setattr(db_todo, key, value)
         db.add(db_todo)

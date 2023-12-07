@@ -24,12 +24,10 @@ async def update_todo(todo_id: int, todo: schemas.TodoUpdate):
     db_todo = await get_todo(todo_id)
     if db_todo is not None:
         query = f"UPDATE {TODOS_TABLE_NAME} SET title=:title, content=:content, done=:done WHERE id=:id"
-        new_todo = schemas.Todo(
-            id=todo_id,
-            title=db_todo.title if todo.title is None else todo.title,
-            content=db_todo.content if todo.content is None else todo.content,
-            done=db_todo.done if todo.done is None else todo.done
-        )
+        new_todo = schemas.Todo(id=todo_id, title=db_todo.title, content=db_todo.content, done=db_todo.done)
+        todo_data = todo.model_dump(exclude_none=True)
+        for key, value in todo_data.items():
+            setattr(new_todo, key, value)
         await database.execute(query=query, values=new_todo.__dict__)
         return await get_todo(todo_id)
     else:
