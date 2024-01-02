@@ -15,7 +15,7 @@ todo list web application server
 1. Clone this repository and change directory to this project
     ```shell
     git clone https://github.com/eunnbi/zero-to-hero.git
-    cd new-todo-list-server
+    cd new_todo_list_server
     ```
 2. Install the dependencies using poetry (You need to install `poetry` in advance)
    ```shell
