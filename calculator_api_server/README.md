@@ -1,10 +1,26 @@
 # Calculator API Server
 
-FastAPI Documentation
-- [Query Parameters](https://fastapi.tiangolo.com/tutorial/query-params/)
-- [Response Model](https://fastapi.tiangolo.com/tutorial/response-model/)
-- [Handling Errors](https://fastapi.tiangolo.com/tutorial/handling-errors/)
+## Tech Stack
 
+- FastAPI
+- Uvicorn
 
-Pydantic Documentation
-- [Generic model](https://docs.pydantic.dev/latest/concepts/models/#generic-models)
+## How to Run
+
+1. Clone this repository and change directory to this project
+    ```shell
+    git clone https://github.com/eunnbi/zero-to-hero.git
+    cd calculator_api_server
+    ```
+2. Install the dependencies using poetry (You need to install `poetry` in advance)
+   ```shell
+    poetry install
+    ```
+3. Activate the virtual environment
+   ```shell
+    poetry shell
+    ```
+4. Run the server
+    ```shell
+    uvicorn app.main:app --reload
+    ```

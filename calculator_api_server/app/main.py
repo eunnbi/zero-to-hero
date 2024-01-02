@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request, HTTPException
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
-from schemas import SuccessResponseModel, CalculationResult
+from app.schemas import SuccessResponseModel, CalculationResult
 
 app = FastAPI()
 
