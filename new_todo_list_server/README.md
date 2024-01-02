@@ -7,7 +7,6 @@ todo list web application server
 ## Tech Stack
 - FastAPI
 - Uvicorn
-- Poetry
 - SQLite
 
 ## How to Run
